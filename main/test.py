@@ -24,6 +24,8 @@ for path in glob.glob(test_img_folder):
     base = osp.splitext(osp.basename(path))[0]
     print(idx, base)
     img = cv2.imread(path, cv2.IMREAD_COLOR)
+    width = img.shape[1]*2
+    height = img.shape[0]*2
     img = img * 1.0 / 255
     img = torch.from_numpy(np.transpose(img[:, :, [2, 1, 0]], (2, 0, 1))).float()
     img_LR = img.unsqueeze(0)
@@ -35,8 +37,7 @@ for path in glob.glob(test_img_folder):
     output = (output * 255.0).round()
     cv2.imwrite('results/{:s}_rlt.png'.format(base), output)
     image = Image.open('results/{:s}_rlt.png'.format(base))
-    width = 800
-    height = 800
+    
     new_size = (width, height)
     resized_image = image.resize(new_size, Image.LANCZOS)
 
