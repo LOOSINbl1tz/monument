@@ -20,12 +20,62 @@ print('Model path {:s}. \nTesting...'.format(model_path))
 
 idx = 0
 for path in glob.glob(test_img_folder):
+        idx += 1
+        base = osp.splitext(osp.basename(path))[0]
+        print(idx, base)
+        img = cv2.imread(path, cv2.IMREAD_COLOR)
+        width = img.shape[1]
+        height = img.shape[0]
+        img = img * 1.0 / 255
+        img = torch.from_numpy(np.transpose(img[:, :, [2, 1, 0]], (2, 0, 1))).float()
+        img_LR = img.unsqueeze(0)
+        img_LR = img_LR.to(device)
+
+        with torch.no_grad():
+            output = model(img_LR).data.squeeze().float().cpu().clamp_(0, 1).numpy()
+        output = np.transpose(output[[2, 1, 0], :, :], (1, 2, 0))
+        output = (output * 255.0).round()
+        cv2.imwrite('rep/{:s}.png'.format(base), output)
+        image = Image.open('rep/{:s}.png'.format(base))
+        
+        new_size = (width, height)
+        resized_image = image.resize(new_size, Image.LANCZOS)
+
+        # Save as PNG to maintain quality
+        resized_image.save('rep/{:s}.png'.format(base))
+for i in range(3):
+    for path in glob.glob('rep/*'):
+        idx += 1
+        base = osp.splitext(osp.basename(path))[0]
+        print(idx, base)
+        img = cv2.imread(path, cv2.IMREAD_COLOR)
+        width = img.shape[1]*2
+        height = img.shape[0]*2
+        img = img * 1.0 / 255
+        img = torch.from_numpy(np.transpose(img[:, :, [2, 1, 0]], (2, 0, 1))).float()
+        img_LR = img.unsqueeze(0)
+        img_LR = img_LR.to(device)
+
+        with torch.no_grad():
+            output = model(img_LR).data.squeeze().float().cpu().clamp_(0, 1).numpy()
+        output = np.transpose(output[[2, 1, 0], :, :], (1, 2, 0))
+        output = (output * 255.0).round()
+        cv2.imwrite('rep/{:s}.png'.format(base), output)
+        image = Image.open('rep/{:s}.png'.format(base))
+        
+        new_size = (width, height)
+        resized_image = image.resize(new_size, Image.LANCZOS)
+
+        # Save as PNG to maintain quality
+        resized_image.save('rep/{:s}.png'.format(base))
+
+for path in glob.glob('rep/*'):
     idx += 1
     base = osp.splitext(osp.basename(path))[0]
     print(idx, base)
     img = cv2.imread(path, cv2.IMREAD_COLOR)
-    width = img.shape[1]*2
-    height = img.shape[0]*2
+    width = img.shape[1]
+    height = img.shape[0]
     img = img * 1.0 / 255
     img = torch.from_numpy(np.transpose(img[:, :, [2, 1, 0]], (2, 0, 1))).float()
     img_LR = img.unsqueeze(0)
@@ -35,11 +85,11 @@ for path in glob.glob(test_img_folder):
         output = model(img_LR).data.squeeze().float().cpu().clamp_(0, 1).numpy()
     output = np.transpose(output[[2, 1, 0], :, :], (1, 2, 0))
     output = (output * 255.0).round()
-    cv2.imwrite('results/{:s}_rlt.png'.format(base), output)
-    image = Image.open('results/{:s}_rlt.png'.format(base))
+    cv2.imwrite('results/{:s}.png'.format(base), output)
+    image = Image.open('results/{:s}.png'.format(base))
     
     new_size = (width, height)
     resized_image = image.resize(new_size, Image.LANCZOS)
 
     # Save as PNG to maintain quality
-    resized_image.save('results/{:s}_rlt.png'.format(base))
+    resized_image.save('results/{:s}.png'.format(base))
