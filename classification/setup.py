@@ -1,6 +1,8 @@
 import os
 import zipfile
 
+# link https://drive.google.com/drive/folders/1xgnCJ5WJVEhROZRCFKuu3mDmn4rCi2-C?usp=drive_link
+
 os.mkdir('data')
 os.mkdir('logs')
 os.mkdir('logs/fit')
