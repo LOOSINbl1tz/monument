@@ -1,5 +1,5 @@
 from keras.models import Model
-from keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense
+from keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 
 # Define the VGG19 architecture
 def VGG19(input_shape, num_classes):
@@ -39,8 +39,18 @@ def VGG19(input_shape, num_classes):
 
     # Fully connected layers
     x = Flatten(name='flatten')(x)
-    x = Dense(256, activation='relu', name='fc1')(x)
-    x = Dense(128, activation='relu', name='fc2')(x)
+    x = Dense(128, activation='relu', name='fc1')(x)
+    x = Dropout(0.5)(x)
+    x = Dense(256, activation='relu', name='fc2')(x)
+    x = Dropout(0.5)(x)
+    x = Dense(512, activation='relu', name='fc3')(x)
+    x = Dropout(0.5)(x)
+    x = Dense(512, activation='relu', name='fc4')(x)
+    x = Dropout(0.5)(x)
+    x = Dense(512, activation='relu', name='fc5')(x)
+    x = Dropout(0.5)(x)
+    x = Dense(512, activation='relu', name='fc6')(x)
+    x = Dropout(0.5)(x)
     x = Dense(num_classes, activation='softmax', name='predictions')(x)
 
     # Create the model

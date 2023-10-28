@@ -1,8 +1,8 @@
 from keras.preprocessing.image import ImageDataGenerator
 import os
 
-target_size = (896,896)
-batch_size = 4  
+target_size = (224,224)
+batch_size = 1  
 train_datagen = ImageDataGenerator(rescale=1.0/255.0)
 test_datagen = ImageDataGenerator(rescale=1.0/127.5 - 1)
 

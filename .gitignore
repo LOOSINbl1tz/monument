@@ -5,3 +5,6 @@
 /main/figures
 /data
 /classification/data
+/classification/logs
+/classification/model
+/classification/test.py
