@@ -146,9 +146,8 @@ def VGG16(input_shape=(224, 224, 3), num_classes=3):
     model.add(MaxPooling2D((2, 2), strides=(2, 2), name='block5_pool'))
     
     model.add(Flatten(name='flatten'))
-    model.add(Dense(128, activation='relu', name='fc1'))
-    model.add(Dense(256, activation='relu', name='fc2'))
-    model.add(Dense(512, activation='relu', name='fc3'))
+    model.add(Dense(1024, activation='relu', name='fc1'))
+    model.add(Dense(1024, activation='relu', name='fc2'))
     model.add(Dense(num_classes, activation='softmax', name='predictions'))
     
     return model

@@ -2,12 +2,16 @@ import os
 import zipfile
 
 # link https://drive.google.com/drive/folders/1xgnCJ5WJVEhROZRCFKuu3mDmn4rCi2-C?usp=drive_link
-
-os.mkdir('data')
-os.mkdir('logs')
-os.mkdir('logs/fit')
-os.mkdir('model')
-os.mkdir('data_temp')
+if not os.path.exists('data'):
+    os.mkdir('data')
+if not os.path.exists('logs'):
+    os.mkdir('logs')
+if not os.path.exists('logs/fit'):
+    os.mkdir('logs/fit')
+if not os.path.exists('model'):
+    os.mkdir('model')
+if not os.path.exists('data_temp'):
+    os.mkdir('data_temp')
 
 data = os.path.join('drive')
 

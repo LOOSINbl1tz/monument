@@ -12,7 +12,7 @@ for i in os.listdir(input_dir):
     #     output_name = os.path.join(folder_dir,str(n+1)+'.png')
     #     os.rename(input_rename,output_name)
 
-    mul = {'test':1,'train':44,'val':5}
+    mul = {'test':1,'train':39,'val':10}
 
     for q in mul:
         out_folder_dir = os.path.join(dest_dir,q,i)

@@ -4,7 +4,7 @@ import os
 from keras.callbacks import TensorBoard
 import datetime
 
-n = 1
+n = 10
 
 data = TrainGen()
 train_data, val_data = data.load()
