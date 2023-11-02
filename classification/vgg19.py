@@ -1,10 +1,10 @@
-from model import VGG19, ResNet50, VGG16
+from model import VGG19
 from data_gen import TrainGen,TestGen
 import os
 from keras.callbacks import TensorBoard
 import datetime
 
-n = 1
+n = 10
 
 data = TrainGen()
 train_data, val_data = data.load()

@@ -1,6 +1,6 @@
 from keras.models import Model
 from keras.layers import Input, Conv2D, MaxPooling2D, Flatten, Dense, Dropout
-from keras.layers import BatchNormalization, Activation, GlobalAveragePooling2D, Dense, Add
+from keras.layers import BatchNormalization, Activation, GlobalAveragePooling2D, Dense, Add, GlobalMaxPooling2D
 from keras.models import Model, Sequential
 
 # Define the VGG19 architecture
@@ -41,18 +41,10 @@ def VGG19(input_shape, num_classes):
 
     # Fully connected layers
     x = Flatten(name='flatten')(x)
-    x = Dense(128, activation='relu', name='fc1')(x)
-    x = Dropout(0.5)(x)
-    x = Dense(256, activation='relu', name='fc2')(x)
-    x = Dropout(0.5)(x)
+    x = Dense(512, activation='relu', name='fc1')(x)
+    x = Dense(512, activation='relu', name='fc2')(x)
     x = Dense(512, activation='relu', name='fc3')(x)
-    x = Dropout(0.5)(x)
-    x = Dense(512, activation='relu', name='fc4')(x)
-    x = Dropout(0.5)(x)
-    x = Dense(512, activation='relu', name='fc5')(x)
-    x = Dropout(0.5)(x)
-    x = Dense(512, activation='relu', name='fc6')(x)
-    x = Dropout(0.5)(x)
+    
     x = Dense(num_classes, activation='softmax', name='predictions')(x)
 
     # Create the model
@@ -109,7 +101,9 @@ def ResNet50(input_shape=(224, 224, 3),classes = 3):
     x = residual_unit(x, 512)
     x = residual_unit(x, 512)
     
-    x = GlobalAveragePooling2D()(x)
+    x = Flatten()(x)
+    x = Dense(128,activation='relu',name='fc1')(x)
+    x = Dense(128,activation='relu',name='fc2')(x)
     x = Dense(classes, activation='softmax')(x)
     
     model = Model(inputs=input_tensor, outputs=x)
@@ -146,8 +140,10 @@ def VGG16(input_shape=(224, 224, 3), num_classes=3):
     model.add(MaxPooling2D((2, 2), strides=(2, 2), name='block5_pool'))
     
     model.add(Flatten(name='flatten'))
-    model.add(Dense(1024, activation='relu', name='fc1'))
-    model.add(Dense(1024, activation='relu', name='fc2'))
+    model.add(Dense(128, activation='relu', name='fc1'))
+    model.add(Dropout(0.5))
+    model.add(Dense(128, activation='relu', name='fc2'))
+    model.add(Dropout(0.5))
     model.add(Dense(num_classes, activation='softmax', name='predictions'))
     
     return model

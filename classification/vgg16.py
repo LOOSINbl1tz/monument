@@ -1,4 +1,4 @@
-from model import VGG19, ResNet50, VGG16
+from model import VGG16
 from data_gen import TrainGen,TestGen
 import os
 from keras.callbacks import TensorBoard

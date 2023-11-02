@@ -28,7 +28,7 @@ class TrainGen:
 
 class TestGen:
     def __init__(self) -> None:
-        self.test_dir = os.path.join('data','test')
+        self.test_dir = os.path.join('data','test_res')
 
     def load(self):
         test_generator = test_datagen.flow_from_directory(

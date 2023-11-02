@@ -11,7 +11,6 @@ train_data, val_data = data.load()
 
 input_shape = (224,224,3)
 
-
 log_dir = os.path.join('logs','fit')  
 tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1, write_graph=True)
 
